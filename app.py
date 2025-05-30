@@ -1,19 +1,18 @@
-
 import streamlit as st
 import google.generativeai as genai
 from typing import List, Dict
 
 # 페이지 설정
 st.set_page_config(
-    page_title="양현이의 챗봇봇",
-    page_icon="🤧",
+    page_title="Gemini 챗봇",
+    page_icon="🤖",
     layout="wide"
 )
 
 # Gemini API 설정
 def configure_genai():
     try:
-        api_key = st.secrets["GOOGLE_API_KEY"]
+        api_key = st.secrets["GEMINI_API_KEY"]
         genai.configure(api_key=api_key)
         return genai.GenerativeModel('gemini-1.5-flash')
     except Exception as e:
@@ -47,7 +46,7 @@ def main():
     display_messages()
     
     # 사용자 입력
-    if prompt := st.chat_input("메세지 입력해"):
+    if prompt := st.chat_input("메시지를 입력하세요..."):
         # 사용자 메시지 추가
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -65,7 +64,7 @@ def main():
                     st.markdown(response.text)
                     st.session_state.messages.append({"role": "assistant", "content": response.text})
                 except Exception as e:
-                    st.error(f"오류: {str(e)}")
+                    st.error(f"응답 생성 중 오류가 발생했습니다: {str(e)}")
 
 if __name__ == "__main__":
     main()
