@@ -12,7 +12,7 @@ st.set_page_config(
 # Gemini API 설정
 def configure_genai():
     try:
-        api_key = st.secrets["GEMINI_API_KEY"]
+        api_key = st.secrets["GOOGLE_API_KEY"]
         genai.configure(api_key=api_key)
         return genai.GenerativeModel('gemini-1.5-flash')
     except Exception as e:
